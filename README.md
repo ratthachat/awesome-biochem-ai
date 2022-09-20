@@ -36,16 +36,36 @@ Similar to SMILES, due to molecule branching, there can be many SELFIES represen
 
 
 ## Enzymatic Reaction
-- ...
+Enzymatic Reaction is a chemical reaction, i.e. from substrate molecule(s) to product molecule(s), catalyzed/accelerated by an enzyme (protein).
 
-## Molecule Generation
-- C5T5
+<img src="https://github.com/ratthachat/awesome-biochem-transformers/blob/main/pictures/enzymatic_reaction.png" width="36%">
+
+- [Self-Attention DTI (2019)]()
+
+- [Metabolite Translator (2020)](https://pubs.rsc.org/en/content/articlelanding/2020/sc/d0sc02639e) : the authors focus on "enzymatic reaction on drug" (drug metabolism). In this work, protein information is entirely ignored and molecules are encoded with SMILES strings. Hence, the authors simplify the problem as "molecule-string translation" as perfectly analogous to "language translation".
+
+The model is pretrained with 900,000 organic chemical reactions (reactions without a catalyze protein) before finetuning with 11,670 enzymatic reactions. However, note that, even though the finetuning dataset spans the whole spectrum of enzyme classes (indicated by [EC Numbers](https://en.wikipedia.org/wiki/Enzyme_Commission_number)), most of the enzymes are EC1, EC2 and EC3 which are quite simple enzymatic reactions.
+
+- [Enzymatic Transformers (2021)](https://pubs.rsc.org/en/content/articlelanding/2021/sc/d1sc02362d) : Similar to [Metabolite Translator (2020)](https://pubs.rsc.org/en/content/articlelanding/2020/sc/d0sc02639e) discussed above, here the authors pretrain the molecule transformers using organic chemical datasets using the same source (USPTO streo augmented from the work of Lowe) before finetuning with 32,181 enzymatic reactions where the authors purchase and filter from [Reaxys](https://www.elsevier.com/solutions/reaxys).
+- 
+<img src="https://github.com/ratthachat/awesome-biochem-transformers/blob/main/pictures/enzymatic_transformer.png" width="30%">
+
+One aspect that improves from Metabolite Translator is the fact that *Enzymatic Transformers* employs a protein information. Nevertheless, instead of using biological information of an amino-acid sequence, protein information is encoded directly via "human language" and the authors use standard NLP encoder to learn about these protein descriptions.
+
+- [MolSyn Transformers (2022)](https://www.kaggle.com/code/ratthachat/molecule-synthesis-selfies-end2end-training) : this works, the authors propose an opensource framework where users have an option to encode a molecule using either SMILES or SELFIES. Moreover, protein information is extracted directly from its amino-acid sequence using state-of-the-arts [protein ESM transformers](https://github.com/facebookresearch/esm).
 
 ## Molecule Retrosynthesis Pathways
-- BioNavi NP
+- [BioNavi NP (2022)]()
 
 ## Molecule Similarity Metrics
 - MAP4
+
+## Molecule Generation
+- C5T5
+- SmilesVAE / SelfiesVAE
+- ChemGPT
+- 3D-graph diffusion
+- JunctionTree VAE
 
 # Protein Transformers
 - AlphaFold2
