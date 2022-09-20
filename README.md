@@ -6,6 +6,7 @@ Favorite list on Transformers and related Deep-learning approaches applied to Ch
 
 - [Molecule Transformers](#molecule-transformers)
   - [Molecule Representation](#molecule-representation)
+  - [Property Prediction](#molecule-property-prediction)
   - [Enzymatic Reaction](#enzymatic-reaction)
   - [Molecule Generation](#molecule-generation)
   - [Retrosynthesis Pathways](#molecule-retrosynthesis-pathways)
@@ -34,20 +35,24 @@ Similar to SMILES, due to molecule branching, there can be many SELFIES represen
 
 **Limitations:** there are still some challenges to represent some molecule information such as stereochemistry using graph. Also, "deep graph generative models" are not as matured as string generative models (e.g. GPT-family). These limitations are on-going active research as of 2022.
 
+## Molecule Property Prediction
+
+- There are a lot of works in this area because by representing a molecule as a SMILES string, any existing language-model transformers can be applied directly. Examples of works are [ChemBERTa (2020)](https://arxiv.org/pdf/2010.09885.pdf), [MolBERT (2020)](https://arxiv.org/pdf/2011.13230.pdf), [ChemTransformers/MolBART (2021)](https://github.com/MolecularAI/Chemformer)
+
+- [Self-Attention DTI (2019)](https://bgshin.github.io/assets/pdf/mtdti.pdf) : This work focus on Drug-Target interaction (DTI) where there are two inputs : a drug which is a small molecule (represented by a SMILES string) and a target which is a protein (represented by an amino-acid sequence). The author propose to use BERT-like transformers to encode drugs and use CNNs to enocode protein strings. The prediction targets are interaction scores indicating how well a drug can interact with a protein target.
+
 
 ## Enzymatic Reaction
 Enzymatic Reaction is a chemical reaction, i.e. from substrate molecule(s) to product molecule(s), catalyzed/accelerated by an enzyme (protein).
 
 <img src="https://github.com/ratthachat/awesome-biochem-transformers/blob/main/pictures/enzymatic_reaction.png" width="36%">
 
-- [Self-Attention DTI (2019)]()
-
 - [Metabolite Translator (2020)](https://pubs.rsc.org/en/content/articlelanding/2020/sc/d0sc02639e) : the authors focus on "enzymatic reaction on drug" (drug metabolism). In this work, protein information is entirely ignored and molecules are encoded with SMILES strings. Hence, the authors simplify the problem as "molecule-string translation" as perfectly analogous to "language translation".
 
 The model is pretrained with 900,000 organic chemical reactions (reactions without a catalyze protein) before finetuning with 11,670 enzymatic reactions. However, note that, even though the finetuning dataset spans the whole spectrum of enzyme classes (indicated by [EC Numbers](https://en.wikipedia.org/wiki/Enzyme_Commission_number)), most of the enzymes are EC1, EC2 and EC3 which are quite simple enzymatic reactions.
 
 - [Enzymatic Transformers (2021)](https://pubs.rsc.org/en/content/articlelanding/2021/sc/d1sc02362d) : Similar to [Metabolite Translator (2020)](https://pubs.rsc.org/en/content/articlelanding/2020/sc/d0sc02639e) discussed above, here the authors pretrain the molecule transformers using organic chemical datasets using the same source (USPTO streo augmented from the work of Lowe) before finetuning with 32,181 enzymatic reactions where the authors purchase and filter from [Reaxys](https://www.elsevier.com/solutions/reaxys).
-- 
+ 
 <img src="https://github.com/ratthachat/awesome-biochem-transformers/blob/main/pictures/enzymatic_transformer.png" width="30%">
 
 One aspect that improves from Metabolite Translator is the fact that *Enzymatic Transformers* employs a protein information. Nevertheless, instead of using biological information of an amino-acid sequence, protein information is encoded directly via "human language" and the authors use standard NLP encoder to learn about these protein descriptions.
