@@ -1,10 +1,11 @@
-# Awesome BioChem Transformers
-Favorite list on Transformers and related Deep-learning approaches applied to Chemistry and Biology
-(for all picture credits see https://github.com/ratthachat/awesome-biochem-transformers/tree/main/pictures)
+# Awesome AI models applied to Biochemistry
+
+Favorite list on AIs, especially Deep-learning approaches applied to Biochemistry
+(for all picture credits see https://github.com/ratthachat/awesome-biochem-ai/tree/main/pictures)
 
 ## Table of Contents
 
-- [Molecule Transformers](#molecule-transformers)
+- [Molecule Models](#molecule-models)
   - [Molecule Representation](#molecule-representation)
   - [Property Prediction](#property-and-interaction-prediction)
   - [Enzymatic Reaction](#enzymatic-reaction)
@@ -12,9 +13,9 @@ Favorite list on Transformers and related Deep-learning approaches applied to Ch
   - [Retrosynthesis Pathways](#molecule-retrosynthesis-pathways)
   - [Molecule Similarity Metrics](#molecule-similarity-metrics)
 
-- [Protein Transformers](#protein-transformers)
+- [Protein Models](#protein-models)
 
-# Molecule Transformers
+# Molecule Models
 
 ## Molecule Representation
 Before talking about deep learning for molecules, we need to think first about "how to represent a molecule" itself.
@@ -64,7 +65,10 @@ One aspect that improves from Metabolite Translator is the fact that *Enzymatic 
 - [MolSyn Transformers (2022)](https://www.kaggle.com/code/ratthachat/molecule-synthesis-selfies-end2end-training) : this works, the authors propose an opensource framework where users have an option to encode a molecule using either SMILES or SELFIES. Moreover, protein information is extracted directly from its amino-acid sequence using state-of-the-arts [protein ESM transformers](https://github.com/facebookresearch/esm).
 
 ## Molecule Retrosynthesis Pathways
-- [BioNavi NP (2022)]()
+- [BioNavi NP (2022)](https://github.com/prokia/BioNavi-NP)
+- [AiZynthFinder (2020)](https://github.com/MolecularAI/aizynthfinder)
+- [RetroXpert (2020)](https://github.com/uta-smile/RetroXpert) - Information Leak as noted in the Github repo.
+- [Graph-to-Graph Retrosynthesis (2020)](https://torchdrug.ai/docs/tutorials/retrosynthesis.html) - [Paper - ICML 2020](https://arxiv.org/pdf/2003.12725.pdf)
 
 ## Molecule Similarity Metrics
 - MAP4
@@ -76,7 +80,7 @@ One aspect that improves from Metabolite Translator is the fact that *Enzymatic 
 - 3D-graph diffusion
 - JunctionTree VAE
 
-# Protein Transformers
+# Protein Models
 - AlphaFold2
 - ESMFold
 - OmegaFold
