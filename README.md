@@ -6,7 +6,7 @@ Favorite list on Transformers and related Deep-learning approaches applied to Ch
 
 - [Molecule Transformers](#molecule-transformers)
   - [Molecule Representation](#molecule-representation)
-  - [Property Prediction](#molecule-property-prediction)
+  - [Property Prediction](#property-and-interaction-prediction)
   - [Enzymatic Reaction](#enzymatic-reaction)
   - [Molecule Generation](#molecule-generation)
   - [Retrosynthesis Pathways](#molecule-retrosynthesis-pathways)
@@ -35,11 +35,15 @@ Similar to SMILES, due to molecule branching, there can be many SELFIES represen
 
 **Limitations:** there are still some challenges to represent some molecule information such as stereochemistry using graph. Also, "deep graph generative models" are not as matured as string generative models (e.g. GPT-family). These limitations are on-going active research as of 2022.
 
-## Molecule Property Prediction
+## Property and Interaction Prediction
 
-- There are a lot of works in this area because by representing a molecule as a SMILES string, any existing language-model transformers can be applied directly. Examples of works are [ChemBERTa (2020)](https://arxiv.org/pdf/2010.09885.pdf), [MolBERT (2020)](https://arxiv.org/pdf/2011.13230.pdf), [ChemTransformers/MolBART (2021)](https://github.com/MolecularAI/Chemformer)
+- **Single-Molecule Properties** : There are a lot of works in this area because by representing a molecule as a SMILES string, any existing language-model transformers can be applied directly. Examples of works are [ChemBERTa (2020)](https://arxiv.org/pdf/2010.09885.pdf), [MolBERT (2020)](https://arxiv.org/pdf/2011.13230.pdf), [ChemTransformers/MolBART (2021)](https://github.com/MolecularAI/Chemformer). These works follow large-language model self-supervised learning where [pretrained models on several millions of molecules are available](https://huggingface.co/models?sort=downloads&search=chem).
 
-- [Self-Attention DTI (2019)](https://bgshin.github.io/assets/pdf/mtdti.pdf) : This work focus on Drug-Target interaction (DTI) where there are two inputs : a drug which is a small molecule (represented by a SMILES string) and a target which is a protein (represented by an amino-acid sequence). The author propose to use BERT-like transformers to encode drugs and use CNNs to enocode protein strings. The prediction targets are interaction scores indicating how well a drug can interact with a protein target.
+Converting a molecule's SMILES to graph and apply Graph Neural Networks (GNNs) to predict a molecule properties is also popular and straightforward, see [MolGraph (2022) paper](https://arxiv.org/ftp/arxiv/papers/2208/2208.09944.pdf) for a survey. However, only few pretrained GNNs on millions of molecules exist : I know of only two pretrained models [Grover (2020)](https://github.com/tencent-ailab/grover) and [GeoGNN (2022)](https://github.com/PaddlePaddle/PaddleHelix/tree/dev/apps/pretrained_compound/ChemRL/GEM).
+
+- **Drug-Target interaction (DTI)** : In this area , there are two inputs : a drug which is a small molecule (usually represented by a SMILES string) and a target which is a protein (usually represented by an amino-acid sequence string). The prediction targets are interaction scores indicating how well a drug can interact with a protein target. Usually, a molecule-string-encoder and protein-string-encoder can be applied to transform the two inputs into vectors and then concatenate them as a final input vector before using a straightforward MLPs to calculate the interaction scores. For example, in [Self-Attention DTI (2019)](https://bgshin.github.io/assets/pdf/mtdti.pdf), the author propose to use BERT-like transformers to encode drugs and use CNNs to enocode protein strings. 
+
+For a comprehensive collection of easy-to-use models and datasets on this area, visit [TorchDrug](https://torchdrug.ai/) and [DeepPurpose](https://github.com/kexinhuang12345/DeepPurpose).
 
 
 ## Enzymatic Reaction
