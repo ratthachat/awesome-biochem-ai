@@ -1,6 +1,6 @@
-# Awesome AI models applied to Biochemistry
+# Curated list of AI models applied to Biochemistry
 
-Favorite list on AIs, especially Deep-learning approaches applied to Biochemistry
+This is my personal favorite list on AIs, especially Deep-learning approaches, applied to Biochemistry.
 (for all picture credits see https://github.com/ratthachat/awesome-biochem-ai/tree/main/pictures)
 
 ## Table of Contents
@@ -12,10 +12,11 @@ Favorite list on AIs, especially Deep-learning approaches applied to Biochemistr
   - [Molecule Generation](#molecule-generation)
   - [Retrosynthesis Pathways](#molecule-retrosynthesis-pathways)
   - [Molecule Similarity Metrics](#molecule-similarity-metrics)
-
+  - [Libraries on Molecule AI](#libraries-on-molecule-ai)
 - [Protein Models](#protein-models)
 
 # Molecule Models
+To get all necessary background please visit this free online book : [Deep Learning for Molecules and Materials](https://dmol.pub/)
 
 ## Molecule Representation
 Before talking about deep learning for molecules, we need to think first about "how to represent a molecule" itself.
@@ -40,12 +41,9 @@ Similar to SMILES, due to molecule branching, there can be many SELFIES represen
 
 - **Single-Molecule Properties** : There are a lot of works in this area because by representing a molecule as a SMILES string, any existing language-model transformers can be applied directly. Examples of works are [ChemBERTa (2020)](https://arxiv.org/pdf/2010.09885.pdf), [MolBERT (2020)](https://arxiv.org/pdf/2011.13230.pdf), [ChemTransformers/MolBART (2021)](https://github.com/MolecularAI/Chemformer). These works follow large-language model self-supervised learning where [pretrained models on several millions of molecules are available](https://huggingface.co/models?sort=downloads&search=chem).
 
-Converting a molecule's SMILES to graph and apply Graph Neural Networks (GNNs) to predict a molecule properties is also popular and straightforward, see [MolGraph (2022) paper](https://arxiv.org/ftp/arxiv/papers/2208/2208.09944.pdf) for a survey. However, only few pretrained GNNs on millions of molecules exist : I know of only two pretrained models [Grover (2020)](https://github.com/tencent-ailab/grover) and [GeoGNN (2022)](https://github.com/PaddlePaddle/PaddleHelix/tree/dev/apps/pretrained_compound/ChemRL/GEM).
+Converting a molecule's SMILES to graph and apply Graph Neural Networks (GNNs) to predict a molecule properties is also popular and straightforward, see [MolGraph (2022) paper](https://arxiv.org/ftp/arxiv/papers/2208/2208.09944.pdf) for a survey. However, only few pretrained GNNs on millions of molecules exist : I know of only three pretrained models [Grover (2020)](https://github.com/tencent-ailab/grover), [MolCLR (2021)](https://github.com/yuyangw/MolCLR) and [GeoGNN (2022)](https://github.com/PaddlePaddle/PaddleHelix/tree/dev/apps/pretrained_compound/ChemRL/GEM).
 
 - **Drug-Target interaction (DTI)** : In this area , there are two inputs : a drug which is a small molecule (usually represented by a SMILES string) and a target which is a protein (usually represented by an amino-acid sequence string). The prediction targets are interaction scores indicating how well a drug can interact with a protein target. Usually, a molecule-string-encoder and protein-string-encoder can be applied to transform the two inputs into vectors and then concatenate them as a final input vector before using a straightforward MLPs to calculate the interaction scores. For example, in [Self-Attention DTI (2019)](https://bgshin.github.io/assets/pdf/mtdti.pdf), the author propose to use BERT-like transformers to encode drugs and use CNNs to enocode protein strings. 
-
-For a comprehensive collection of easy-to-use models and datasets on this area, visit [TorchDrug](https://torchdrug.ai/) and [DeepPurpose](https://github.com/kexinhuang12345/DeepPurpose).
-
 
 ## Enzymatic Reaction
 Enzymatic Reaction is a chemical reaction, i.e. from substrate molecule(s) to product molecule(s), catalyzed/accelerated by an enzyme (protein).
@@ -79,6 +77,16 @@ One aspect that improves from Metabolite Translator is the fact that *Enzymatic 
 - ChemGPT
 - 3D-graph diffusion
 - JunctionTree VAE
+
+## 3D Molecule Models
+- coming soon
+
+## Libraries on Molecule AI
+- [DeepPurpose](https://github.com/kexinhuang12345/DeepPurpose) provides a list of DTI datasets as well as pretrained models.
+- [TorchDrug](https://torchdrug.ai/) provides a comprehensive collection of easy-to-use models and datasets on molecules graph datasets and models, molecule generative models, protein graph datasets, and protein models
+- [MolGraph](https://molgraph.readthedocs.io/en/latest/index.html) a new native Keras library focus on molecule graph encoder models.
+- [DIG](https://diveintographs.readthedocs.io/en/latest/index.html) provides advanced models on graph generation, self-supervised learning, explainability, and 3D-graph models
+- [ChemicalX](https://github.com/AstraZeneca/chemicalx) is AstraZeneca's repository focus on Drug-pair scoring models and applications.
 
 # Protein Models
 - AlphaFold2
