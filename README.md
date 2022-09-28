@@ -1,6 +1,6 @@
 # Curated list of AI models applied to Biochemistry
 
-This is my personal favorite list on AIs, especially Deep-learning approaches, applied to Biochemistry.
+This is my personal favorite list on Biochemistry + AIs, especially Deep-learning approaches.
 (for all picture credits see https://github.com/ratthachat/awesome-biochem-ai/tree/main/pictures)
 
 ## Table of Contents
@@ -11,12 +11,13 @@ This is my personal favorite list on AIs, especially Deep-learning approaches, a
   - [Enzymatic Reaction](#enzymatic-reaction)
   - [Molecule Generation](#molecule-generation)
   - [Retrosynthesis Pathways](#molecule-retrosynthesis-pathways)
+  - [Atom Mapping](#atom-mapping)
   - [Molecule Similarity Metrics](#molecule-similarity-metrics)
   - [Libraries on Molecule AI](#libraries-on-molecule-ai)
 - [Protein Models](#protein-models)
 
 # Molecule Models
-To get all necessary background please visit this free online book : [Deep Learning for Molecules and Materials](https://dmol.pub/)
+To get all necessary background please visit this free online book : [Deep Learning for Molecules and Materials](https://dmol.pub/). In contrast, to always update with the advanced frontier, follow [MIT's Hannes Stark](https://www.linkedin.com/in/hannes-stark/).
 
 ## Molecule Representation
 Before talking about deep learning for molecules, we need to think first about "how to represent a molecule" itself.
@@ -60,13 +61,31 @@ The model is pretrained with 900,000 organic chemical reactions (reactions witho
 
 One aspect that improves from Metabolite Translator is the fact that *Enzymatic Transformers* employs a protein information. Nevertheless, instead of using biological information of an amino-acid sequence, protein information is encoded directly via "human language" and the authors use standard NLP encoder to learn about these protein descriptions.
 
+- [RXNAAMapper (2021)](https://chemrxiv.org/engage/chemrxiv/article-details/61d7f0506be4200bbf24829e)[[code](https://github.com/rxn4chemistry/rxnaamapper)] : IBM's work on mapping a chemical reaction (rxn) with an enzyme or amino-acids (aa) to predict the active site of the enzyme. This work used string based for both molecules (SMILES) and enzymes (amino acid strings).
+
 - [MolSyn Transformers (2022)](https://www.kaggle.com/code/ratthachat/molecule-synthesis-selfies-end2end-training) : this works, the authors propose an opensource framework where users have an option to encode a molecule using either SMILES or SELFIES. Moreover, protein information is extracted directly from its amino-acid sequence using state-of-the-arts [protein ESM transformers](https://github.com/facebookresearch/esm).
 
 ## Molecule Retrosynthesis Pathways
+
 - [BioNavi NP (2022)](https://github.com/prokia/BioNavi-NP)
+
+- [Root-aligned SMILES (2022)](https://github.com/otori-bird/retrosynthesis) : This works proposes **R-SMILES** which is adjusted SMILES representations of the input molecules (i.e. make the two molecules align by starting with the same root atom), discrepancy (e.g. edit-distance) of the product-reactant SMILES will become much closer to the default canonical SMILES. By simply apply vanilla encoder-decoder transformers with R-SMILES, the author claims to get state-of-the-arts results over standard benchmark (USPTO). Note that there in a bug in Fig.1 in the published journal paper, so readers should read [an updated arxiv version](https://arxiv.org/abs/2203.11444)
+
 - [AiZynthFinder (2020)](https://github.com/MolecularAI/aizynthfinder)
+
 - [RetroXpert (2020)](https://github.com/uta-smile/RetroXpert) - Information Leak as noted in the Github repo.
+
 - [Graph-to-Graph Retrosynthesis (2020)](https://torchdrug.ai/docs/tutorials/retrosynthesis.html) - [Paper - ICML 2020](https://arxiv.org/pdf/2003.12725.pdf)
+
+## Atom Mapping
+
+As seen in the below picture, the task of **atom-atom mapping** is to find the most common substructure of the two input molecules.
+This task can be useful in reaction prediction, molecule translation, retrosynthesis prediction, etc.
+<img src="https://github.com/ratthachat/awesome-biochem-ai/blob/main/pictures/rxnmapper.jpg" width="36%">
+
+- [RXNMapper (2021)](https://github.com/rxn4chemistry/rxnmapper) : IBM's work applied string-based encoder-decoder transformers to perform atom-atom mapping between two SMILES strings.
+
+- [Procrustes (2022)](https://procrustes.qcdevs.org/) :  Procrustes proposes a rigorous mathematical optimization library of finding the optimal transformation(s) that makes two matrices as close as possible to each other, which is also included atom-atom mapping as can be seen in the [tutorial here](https://procrustes.qcdevs.org/notebooks/Atom_Atom_Mapping.html). Unlike, RXNMapper which works with string-based molecule, Procrustes works with Graph-based representation of molecules.
 
 ## Molecule Similarity Metrics
 - MAP4
