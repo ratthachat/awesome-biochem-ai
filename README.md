@@ -67,7 +67,9 @@ One aspect that improves from Metabolite Translator is the fact that *Enzymatic 
 
 ## Molecule Retrosynthesis Pathways
 
-- [BioNavi NP (2022)](https://github.com/prokia/BioNavi-NP)
+<img src="https://github.com/ratthachat/awesome-biochem-ai/blob/main/pictures/retrosynthesis_bionavi.png" width="44%">
+
+- [BioNavi-NP (2022)](https://github.com/prokia/BioNavi-NP) : BioNavi-NP is based on the recent work of [Retro* (ICML 2020)](https://github.com/binghong-ml/retro_star) which is a framework for multi-step pathway predictor based on [A*-algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm). BioNavi-NP concretize Retro* in natural-product pathways by (1) using standard transformers as 1-step predictor and (2) make a [web-based extension](http://biopathnavi.qmclab.com/) which connects to other systems such as [Selenzyme](http://selenzyme.synbiochem.co.uk/) to predict an enzyme for each reaction in a pathway.
 
 - [Root-aligned SMILES (2022)](https://github.com/otori-bird/retrosynthesis) : This works proposes **R-SMILES** which is adjusted SMILES representations of the input molecules (i.e. make the two molecules align by starting with the same root atom), discrepancy (e.g. edit-distance) of the product-reactant SMILES will become much closer to the default canonical SMILES. By simply apply vanilla encoder-decoder transformers with R-SMILES, the author claims to get state-of-the-arts results over standard benchmark (USPTO). Note that there in a bug in Fig.1 in the published journal paper, so readers should read [an updated arxiv version](https://arxiv.org/abs/2203.11444)
 
@@ -79,26 +81,44 @@ One aspect that improves from Metabolite Translator is the fact that *Enzymatic 
 
 ## Atom Mapping
 
-As seen in the below picture, the task of **atom-atom mapping** is to find the most common substructure of the two input molecules.
+<img src="https://github.com/ratthachat/awesome-biochem-ai/blob/main/pictures/rxnmapper.jpg" width="40%">
+
+The task of **atom-atom mapping** is to find the most common substructure of the two input molecules.
 This task can be useful in reaction prediction, molecule translation, retrosynthesis prediction, etc.
-<img src="https://github.com/ratthachat/awesome-biochem-ai/blob/main/pictures/rxnmapper.jpg" width="36%">
 
 - [RXNMapper (2021)](https://github.com/rxn4chemistry/rxnmapper) : IBM's work applied string-based encoder-decoder transformers to perform atom-atom mapping between two SMILES strings.
 
 - [Procrustes (2022)](https://procrustes.qcdevs.org/) :  Procrustes proposes a rigorous mathematical optimization library of finding the optimal transformation(s) that makes two matrices as close as possible to each other, which is also included atom-atom mapping as can be seen in the [tutorial here](https://procrustes.qcdevs.org/notebooks/Atom_Atom_Mapping.html). Unlike, RXNMapper which works with string-based molecule, Procrustes works with Graph-based representation of molecules.
 
+- RDKit which is a standard chemoinformatics tool can also be used to perform atom-atom mapping using [Maximum Common Substructure (MCS)](https://www.rdkit.org/docs/source/rdkit.Chem.MCS.html). See [this example](https://gist.github.com/iwatobipen/6d8708d8c77c615cfffbb89409be730d).
+
 ## Molecule Similarity Metrics
-- MAP4
+- **Exact match** : for some application where precision is needed. Exact match is the best choice. The standard approach to perform exact molecule match (e.g. used in [HGraph2Graph (2020)](https://arxiv.org/pdf/2002.03230.pdf) is to generate the molecule *K* times and calculate the ratio of perfect matching of the generated and true canonical SMILES.
+
+- [MAP4](https://github.com/reymond-group/map4) : MAP4 is a recent MinHash fingerprint which comes with a big-title paper, [One molecular fingerprint to rule them all: drugs, biomolecules, and the metabolome](https://jcheminf.biomedcentral.com/articles/10.1186/s13321-020-00445-4).
 
 ## Molecule Generation
+
+### String-based
 - C5T5
 - SmilesVAE / SelfiesVAE
 - ChemGPT
-- 3D-graph diffusion
-- JunctionTree VAE
+- CGVAE
 
-## 3D Molecule Models
-- coming soon
+### Graph-based Atom-level
+- GraphRNN
+- GRAN
+- DGMG
+
+### Graph-based Motif-level
+- [JunctionTree VAE (ICML 2018)](https://arxiv.org/pdf/1802.04364.pdf) - A classic work in graph-based molecule generation in tree-like manner. Unlike atom-level approaches, it can generate a ring into a molecule in one-step.
+
+- [HGraph2Graph (ICML 2020)](https://arxiv.org/pdf/2002.03230.pdf) - An improved framework over JT-VAE by the same authors. The differences are (1) HGraph2Graph allows to use large motifs where as JT-VAE uses only small motifs such as rings. (2) HGraph2Graph is cleverly designed to avoid combinatorial problem in molecule generation e.g. it remembers specific atoms in each motif vocabulary which can be connect; hence, it avoids considering all connection possibilities in each motif. For details see this [nice video clip by the author](https://www.youtube.com/watch?v=Y5ZLbJDsuEU).
+
+- [MoLeR (ICLR 2022)](https://arxiv.org/pdf/2103.03864.pdf)[[Code](https://github.com/microsoft/molecule-generation)] from Microsoft which is claimed to be better than HGraph2Graph, e.g. HGraph2Graph cannot make arbitrary cyclic structure.
+
+### 3D
+- [Equivariant Diffusion for Molecule Generation in 3D (ICML 2022)](https://arxiv.org/pdf/2203.17003.pdf)
 
 ## Libraries on Molecule AI
 - [DeepPurpose](https://github.com/kexinhuang12345/DeepPurpose) provides a list of DTI datasets as well as pretrained models.
@@ -106,6 +126,8 @@ This task can be useful in reaction prediction, molecule translation, retrosynth
 - [MolGraph](https://molgraph.readthedocs.io/en/latest/index.html) a new native Keras library focus on molecule graph encoder models.
 - [DIG](https://diveintographs.readthedocs.io/en/latest/index.html) provides advanced models on graph generation, self-supervised learning, explainability, and 3D-graph models
 - [ChemicalX](https://github.com/AstraZeneca/chemicalx) is AstraZeneca's repository focus on Drug-pair scoring models and applications.
+- [DGL-LifeSci](https://lifesci.dgl.ai/) is a python package for applying graph neural networks to various tasks in chemistry and biology, on top of PyTorch, DGL, and RDKit. It covers various applications, including Molecular property prediction, Generative models, Reaction prediction and 
+Protein-ligand binding affinity prediction
 
 # Protein Models
 - AlphaFold2
