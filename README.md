@@ -97,7 +97,16 @@ This task can be useful in reaction prediction, molecule translation, retrosynth
 
 - [MAP4 (2020)](https://github.com/reymond-group/map4) : MAP4 is a recent MinHash fingerprint which comes with a big-title paper, [One molecular fingerprint to rule them all: drugs, biomolecules, and the metabolome](https://jcheminf.biomedcentral.com/articles/10.1186/s13321-020-00445-4) claimed to be an improvement to existing [standard fingerprints](https://rdkit.org/UGM/2012/Landrum_RDKit_UGM.Fingerprints.Final.pptx.pdf). Once a molecule is converted to its fingerprint, we can use [Tanimoto Similarity](https://en.wikipedia.org/wiki/Chemical_similarity) to measure the similarity for any two fingerprints.
 
-- **String Edit Distance** : For string-based molecules, we can simply compared edit distance between (canonical) true and generated strings. Standard edit distance is [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance). For comprehensive library on [various distance choices](https://itnext.io/string-similarity-the-basic-know-your-algorithms-guide-3de3d7346227), see [TextDistance repository](https://github.com/life4/textdistance)
+- **String Edit Distance** : For string-based molecules, we can simply compared edit distance between (canonical) true and generated strings. Standard edit distance is [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance). For comprehensive library on [various distance choices](https://itnext.io/string-similarity-the-basic-know-your-algorithms-guide-3de3d7346227), see [TextDistance repository](https://github.com/life4/textdistance) $x = {-b \pm \sqrt{b^2-4ac} \over 2a}$
+
+- **Maximum Common Substructure (MCS) Distance** : [MCS-distance](https://www.sciencedirect.com/science/article/abs/pii/S0167865597001797) is a proper mathematical metric defined as 
+
+$$d_{MCS}(m_1, m_2) = 1 - \frac{|MCS(m_1, m_2)|}{max(|m_1|, |m_2|)}$$
+
+  where $MCS(m_1, m_2)$ is the [maximum common substructure](https://greglandrum.github.io/rdkit-blog/tutorial/3d/mcs/2022/06/23/3d-mcs.html) of molecules $m_1$ and $m_2$ and $|m_i|$ is the total number of atoms of $m_i$. In the figure below, MCS between two molecules is draw as a *black* backbone where differences between the two molecules are highlight in red. MCS distance is intuitive to interpret.
+
+<img src="https://i.imgur.com/Oxp69P2.png" width="44%">
+
 
 - **(Approximate) Graph Edit Distance** : Molecules similarity can be straightforward in graph-based representation if we can map between atoms ot the two compared molecules. Hence, we can apply [atom-atom mapping](#atom-mapping) techniques above and then similarity measure can be simply based on differences of their adjacency matrices. Alternatively, we can also use [(Approximate) Graph Matching repository](https://github.com/Jacobe2169/GMatch4py). Note that this repository requires us to convert molecules into [networkx](https://github.com/networkx/networkx) format which can be done by this [guideline](https://github.com/dakoner/keras-molecules/blob/dbbb790e74e406faa70b13e8be8104d9e938eba2/convert_rdkit_to_networkx.py).
 
@@ -105,19 +114,21 @@ This task can be useful in reaction prediction, molecule translation, retrosynth
 
 - **Statistic Matching** : In contrast to a molecule-pair metric, if we want to compare two molecule distributions e.g. between the training and generated sets, we can use the following statistics as used by [HGraph2Graph (2020)](https://arxiv.org/pdf/2002.03230.pdf)
   - Property Statistics :  partition coefficient (logP), synthetic accessibility (SA), drug-likeness (QED) and molecular weight (MW)
-  - Structure Statistics : e.g. Chemical Formula, Nearest neighbor similarity (SNN), Fragment similarity (Frag), scaffold similarity
-(Scaf)
+  - Structure Statistics : e.g. Chemical Formula, Nearest neighbor similarity, Fragment similarity, scaffold similarity
 
 ## Molecule Generation
 
 ### String-based
-- C5T5
 - SmilesVAE / SelfiesVAE
 - ChemGPT
-- CGVAE
+- MolGPT
+- C5T5
+- MolT5
+
 
 ### Graph-based Atom-level
 - GraphRNN
+- CGVAE
 - GRAN
 - DGMG
 
@@ -134,12 +145,13 @@ This task can be useful in reaction prediction, molecule translation, retrosynth
 ## Libraries on Molecule AI
 - [DeepPurpose](https://github.com/kexinhuang12345/DeepPurpose) provides a list of DTI datasets as well as pretrained models.
 - [TorchDrug](https://torchdrug.ai/) provides a comprehensive collection of easy-to-use models and datasets on molecules graph datasets and models, molecule generative models, protein graph datasets, and protein models
-- [MolGraph](https://molgraph.readthedocs.io/en/latest/index.html) a new native Keras library focus on molecule graph encoder models.
 - [DIG](https://diveintographs.readthedocs.io/en/latest/index.html) provides advanced models on graph generation, self-supervised learning, explainability, and 3D-graph models
 - [ChemicalX](https://github.com/AstraZeneca/chemicalx) is AstraZeneca's repository focus on Drug-pair scoring models and applications.
 - [DGL-LifeSci](https://lifesci.dgl.ai/) is a python package for applying graph neural networks to various tasks in chemistry and biology, on top of PyTorch, DGL, and RDKit. It covers various applications, including Molecular property prediction, Generative models, Reaction prediction and 
 Protein-ligand binding affinity prediction
-
+- [DeepChem](https://deepchem.readthedocs.io/en/latest/) Originating from chemistry-focus models, now DeepChem is an exhausive Tensorflow library supporting several other fields e.g. material science and life science.
+- [MolGraph](https://molgraph.readthedocs.io/en/latest/index.html) a new native Keras library focus on molecule graph encoder models.
+- 
 # Protein Models
 - AlphaFold2
 - ESMFold
