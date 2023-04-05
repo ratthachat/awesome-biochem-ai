@@ -59,7 +59,13 @@ Enzymatic Reaction is a chemical reaction, i.e. from substrate molecule(s) to pr
  
 <img src="https://github.com/ratthachat/awesome-biochem-transformers/blob/main/pictures/enzymatic_transformer.png" width="30%">
 
-  One aspect that improves from Metabolite Translator is the fact that *Enzymatic Transformers* employs a protein information. Nevertheless, instead of using biological information of an amino-acid sequence, protein information is encoded directly via "human language" and the authors use standard NLP encoder to learn about these protein descriptions.
+  One aspect that *Enzymatic Transformers* improves from Metabolite Translator is the fact that it employs a protein information. Nevertheless, instead of using biological information of an amino-acid sequence, protein information is encoded directly via "human language" and the authors use standard NLP encoder to learn about these protein descriptions.
+
+- [Improved Substrate Encodings and Convolutional Pooling (2022)](https://proceedings.mlr.press/v165/xu22a/xu22a.pdf) : This work focuses on classification and/or regression on enzymatic reaction using both substrate and protein/enzyme information. Therefore, the authors emphasize only on the encoder architecture and **NOT** on the prediction of the output molecule structure using a decoder.
+
+  On the enzyme encoder part, the authors propose to use a standard protein encoder such as ESM-1b with Conv1D. Given the the sequence of embedding vectors from ESM-1b or ProtTrans, instead of standard global pooling, the authors claim that employing Conv1D layers better capture both global and local protein information.
+
+  On the substrate encoder part, the author propose to use [ECFP6](https://github.com/rdkit/rdkit/issues/1295)-["Count" encoder](https://stackoverflow.com/questions/54809506/how-can-i-compute-a-count-morgan-fingerprint-as-numpy-array) to capture molecular substructure information.
 
 - [RXNAAMapper (2021)](https://chemrxiv.org/engage/chemrxiv/article-details/61d7f0506be4200bbf24829e)[[code](https://github.com/rxn4chemistry/rxnaamapper)] : IBM's work on mapping a chemical reaction (rxn) with an enzyme or amino-acids (aa) to predict the active site of the enzyme. This work used string based for both molecules (SMILES) and enzymes (amino acid strings).
 
@@ -153,9 +159,11 @@ Protein-ligand binding affinity prediction
 - [MolGraph](https://molgraph.readthedocs.io/en/latest/index.html) a new native Keras library focus on molecule graph encoder models.
 - 
 # Protein Models
-- AlphaFold2
-- ESMFold
-- OmegaFold
+- AlphaFold2 (2021)
+- ESM2 and ESMFold (2022)
+- OmegaFold (2022)
+- ProtTrans (2021)
+- [Ankh (2023)](https://arxiv.org/abs/2301.06568)
 
 ## Protein-Protein Docking
 - EquiDock
