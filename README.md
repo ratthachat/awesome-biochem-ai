@@ -160,6 +160,9 @@ Protein-ligand binding affinity prediction
 - [MolGraph](https://molgraph.readthedocs.io/en/latest/index.html) a new native Keras library focus on molecule graph encoder models.
 
 # Protein Models
+To see, discuss latest developments of the field, please follow [ML for protein engineering seminar series (youtube channel)](https://youtube.com/@mlforproteinengineeringsem6420)
+
+
 - [AlphaFold2 (2021)](https://github.com/deepmind/alphafold) The first ground-breaking work capable of predict highly accurate 3D structure protein folding by Google's DeepMind. The official implementation is in Jax. See pytorch replication [here](https://github.com/lucidrains/alphafold2). We can run on a free Colab machine with [Colabfold](https://github.com/sokrypton/ColabFold)
 
 - [ProtTrans (2021)](https://github.com/agemagician/ProtTrans) by Technical University of Munich is one of the earliest work to apply large language models such as BERT and T5 to protein strings. This work treat proteins as pure strings of 20 amino-acid characters without using other biochemistry knowledge (for example, AlphaFold2 uses Multiple Sequence Alignment). Pure protein strings are feeded to BERT/T5 and protein vectors are produced as a result. These protein vectors then are in turn fed to standard MLPs for protein property prediction tasks. 
@@ -175,10 +178,17 @@ Protein-ligand binding affinity prediction
 
 
 ## Protein-Protein Docking
-- EquiDock
+- [EquiDock (ICLR 2022)](https://github.com/octavian-ganea/equidock_public)
 
 ## Protein-Ligand Docking
-- EquiBind
+
+Traditional approaches samples a lot of possible binding sites for a pair of protein-ligand, then score each possible sites and return the site having the best score. Even though this method works fine, it is quite computational expensive because a lot of possible binding sites have to be considered.
+ 
+[EquiBind (ICML 2022)](https://github.com/HannesStark/EquiBind) and [DiffDock (ICLR 2023)](https://github.com/gcorso/DiffDock) are works from the same MIT team. To solve protein-ligand binding/docking problem, these two works use "direct prediction" of binding-site instead of "sampling and score" used by traditional approaches.
+
+- EquiBind follows EquiDock by applying SE(3)-Equivariance transformers to extract information from both protein and ligands. The final binding site is predicted directly using "keypoint" prediction technique.
+
+- DiffDock improves further from EquiBind and instead of using keypoint prediction, the predicted binding site is generated with generative diffusion model. DiffDock also employs ESM2 to extract protein information. See overview of DiffDock on [MIT news](https://news.mit.edu/2023/speeding-drug-discovery-with-diffusion-generative-models-diffdock-0331)
 
 ## Protein Generation
 
