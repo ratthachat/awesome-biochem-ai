@@ -56,10 +56,11 @@ Enzymatic Reaction is a chemical reaction, i.e. from substrate molecule(s) to pr
   The model is pretrained with 900,000 organic chemical reactions (reactions without a catalyze protein) before finetuning with 11,670 enzymatic reactions. However, note that, even though the finetuning dataset spans the whole spectrum of enzyme classes (indicated by [EC Numbers](https://en.wikipedia.org/wiki/Enzyme_Commission_number)), most of the enzymes are EC1, EC2 and EC3 which are quite simple enzymatic reactions.
 
 - [Enzymatic Transformers (2021)](https://pubs.rsc.org/en/content/articlelanding/2021/sc/d1sc02362d) : Similar to [Metabolite Translator (2020)](https://pubs.rsc.org/en/content/articlelanding/2020/sc/d0sc02639e) discussed above, here the authors pretrain the molecule transformers using organic chemical datasets using the same source (USPTO streo augmented from the work of Lowe) before finetuning with 32,181 enzymatic reactions where the authors purchase and filter from [Reaxys](https://www.elsevier.com/solutions/reaxys).
- 
-<img src="https://github.com/ratthachat/awesome-biochem-transformers/blob/main/pictures/enzymatic_transformer.png" width="30%">
 
   One aspect that *Enzymatic Transformers* improves from Metabolite Translator is the fact that it employs a protein information. Nevertheless, instead of using biological information of an amino-acid sequence, protein information is encoded directly via "human language" and the authors use standard NLP encoder to learn about these protein descriptions.
+
+<img src="https://github.com/ratthachat/awesome-biochem-transformers/blob/main/pictures/enzymatic_transformer.png" width="30%">
+ 
 
 - [Improved Substrate Encodings and Convolutional Pooling (2022)](https://proceedings.mlr.press/v165/xu22a/xu22a.pdf) : This work focuses on classification and/or regression on enzymatic reaction using both substrate and protein/enzyme information. Therefore, the authors emphasize only on the encoder architecture and **NOT** on the prediction of the output molecule structure using a decoder.
 
@@ -103,7 +104,7 @@ This task can be useful in reaction prediction, molecule translation, retrosynth
 
 - [MAP4 (2020)](https://github.com/reymond-group/map4) : MAP4 is a recent MinHash fingerprint which comes with a big-title paper, [One molecular fingerprint to rule them all: drugs, biomolecules, and the metabolome](https://jcheminf.biomedcentral.com/articles/10.1186/s13321-020-00445-4) claimed to be an improvement to existing [standard fingerprints](https://rdkit.org/UGM/2012/Landrum_RDKit_UGM.Fingerprints.Final.pptx.pdf). Once a molecule is converted to its fingerprint, we can use [Tanimoto Similarity](https://en.wikipedia.org/wiki/Chemical_similarity) to measure the similarity for any two fingerprints.
 
-- **String Edit Distance** : For string-based molecules, we can simply compared edit distance between (canonical) true and generated strings. Standard edit distance is [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance). For comprehensive library on [various distance choices](https://itnext.io/string-similarity-the-basic-know-your-algorithms-guide-3de3d7346227), see [TextDistance repository](https://github.com/life4/textdistance) $x = {-b \pm \sqrt{b^2-4ac} \over 2a}$
+- **String Edit Distance** : For string-based molecules, we can simply compared edit distance between (canonical) true and generated strings. Standard edit distance is [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance). For comprehensive library on [various distance choices](https://itnext.io/string-similarity-the-basic-know-your-algorithms-guide-3de3d7346227), see [TextDistance repository](https://github.com/life4/textdistance)
 
 - **Maximum Common Substructure (MCS) Distance** : [MCS-distance](https://www.sciencedirect.com/science/article/abs/pii/S0167865597001797) is a proper mathematical metric defined as 
 
@@ -157,13 +158,21 @@ $$d_{MCS}(m_1, m_2) = 1 - \frac{|MCS(m_1, m_2)|}{max(|m_1|, |m_2|)}$$
 Protein-ligand binding affinity prediction
 - [DeepChem](https://deepchem.readthedocs.io/en/latest/) Originating from chemistry-focus models, now DeepChem is an exhausive Tensorflow library supporting several other fields e.g. material science and life science.
 - [MolGraph](https://molgraph.readthedocs.io/en/latest/index.html) a new native Keras library focus on molecule graph encoder models.
-- 
+
 # Protein Models
-- AlphaFold2 (2021)
-- ESM2 and ESMFold (2022)
-- OmegaFold (2022)
-- ProtTrans (2021)
-- [Ankh (2023)](https://arxiv.org/abs/2301.06568)
+- [AlphaFold2 (2021)](https://github.com/deepmind/alphafold) The first ground-breaking work capable of predict highly accurate 3D structure protein folding by Google's DeepMind. The official implementation is in Jax. See pytorch replication [here](https://github.com/lucidrains/alphafold2). We can run on a free Colab machine with [Colabfold](https://github.com/sokrypton/ColabFold)
+
+- [ProtTrans (2021)](https://github.com/agemagician/ProtTrans) by Technical University of Munich is one of the earliest work to apply large language models such as BERT and T5 to protein strings. This work treat proteins as pure strings of 20 amino-acid characters without using other biochemistry knowledge (for example, AlphaFold2 uses Multiple Sequence Alignment). Pure protein strings are feeded to BERT/T5 and protein vectors are produced as a result. These protein vectors then are in turn fed to standard MLPs for protein property prediction tasks. 
+  Note that these property prediction tasks are either simple classification or regression, not a complex 3D protein folding prediction like AlphaFold.
+
+- [Ankh (2023)](https://github.com/agemagician/Ankh) - [paper](https://arxiv.org/abs/2301.06568) The 2023 protein language model by the main author of ProtTrans. Ankh, which employs T5-like architecture, claims to be superior to both ProtTrans and ESM/ESM2 on standard protein property predicitons.
+
+- [ESM2 and ESMFold (2022)](https://github.com/facebookresearch/esm) - Amazing work from Meta AI which, similar to ProtTrans, uses only pure protein strings as input to the model. Not only property prediction, ESMFold is shown to be capablel of producing 3D protein folding structure comparable to AlphaFold2, but much faster running time.
+  There is also [Huggingface official implementation of ESMfold](https://huggingface.co/facebook/esmfold_v1).
+
+- [OmegaFold (2022)](https://github.com/HeliXonProtein/OmegaFold) - [paper](https://www.biorxiv.org/content/10.1101/2022.07.21.500999v1.full.pdf) Another work similar to ESMFold which is able to predict  3D protein folding structure from pure protein strings. 
+  Interestingly, OmegaFold architecture uses Gate Attention Unit (GAU) instead of multi-head self-attention layers which is standard in Transformers.
+
 
 ## Protein-Protein Docking
 - EquiDock
