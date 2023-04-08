@@ -15,6 +15,10 @@ This is my personal favorite list on Biochemistry + AIs, especially Deep-learnin
   - [Molecule Similarity Metrics](#molecule-similarity-metrics)
   - [Libraries on Molecule AI](#libraries-on-molecule-ai)
 - [Protein Models](#protein-models)
+  - [Protein-Protein Docking](#protein-protein-docking)
+  - [Protein-Ligand Binding](#protein-ligand-binding)
+  - [Protein Generation](#protein-generation)
+  - [Protein Design](#protein-design)
 
 # Molecule Models
 To get all necessary background please visit this free online book : [Deep Learning for Molecules and Materials](https://dmol.pub/). In contrast, to always update with the advanced frontier, follow [MIT's Hannes Stark](https://www.linkedin.com/in/hannes-stark/).
@@ -173,6 +177,8 @@ To see, discuss latest developments of the field, please follow [ML for protein 
 - [ESM2 and ESMFold (2022)](https://github.com/facebookresearch/esm) - Amazing work from Meta AI which, similar to ProtTrans, uses only pure protein strings as input to the model. Not only property prediction, ESMFold is shown to be capablel of producing 3D protein folding structure comparable to AlphaFold2, but much faster running time.
   There is also [Huggingface official implementation of ESMfold](https://huggingface.co/facebook/esmfold_v1).
 
+<img src="https://github.com/ratthachat/awesome-biochem-transformers/blob/main/pictures/esmfold.jpg" width="53%">
+
 - [OmegaFold (2022)](https://github.com/HeliXonProtein/OmegaFold) - [paper](https://www.biorxiv.org/content/10.1101/2022.07.21.500999v1.full.pdf) Another work similar to ESMFold which is able to predict  3D protein folding structure from pure protein strings. 
   Interestingly, OmegaFold architecture uses Gate Attention Unit (GAU) instead of multi-head self-attention layers which is standard in Transformers.
 
@@ -180,7 +186,7 @@ To see, discuss latest developments of the field, please follow [ML for protein 
 ## Protein-Protein Docking
 - [EquiDock (ICLR 2022)](https://github.com/octavian-ganea/equidock_public)
 
-## Protein-Ligand Docking
+## Protein-Ligand Binding
 
 Traditional approaches samples a lot of possible binding sites for a pair of protein-ligand, then score each possible sites and return the site having the best score. Even though this method works fine, it is quite computational expensive because a lot of possible binding sites have to be considered.
  
@@ -191,5 +197,7 @@ Traditional approaches samples a lot of possible binding sites for a pair of pro
 - DiffDock improves further from EquiBind and instead of using keypoint prediction, the predicted binding site is generated with generative diffusion model. DiffDock also employs ESM2 to extract protein information. See overview of DiffDock on [MIT news](https://news.mit.edu/2023/speeding-drug-discovery-with-diffusion-generative-models-diffdock-0331)
 
 ## Protein Generation
+[ProGen2 (2022)][https://github.com/salesforce/progen/tree/main/progen2] ([paper](https://arxiv.org/abs/2206.13517)) - ProGen: Language Modeling for Protein Engineering by SalesForce. This work employs GPT-like (decoder-only) architecture. Model weights from 151M to 6.4B are available in the repo.
 
 ## Protein Design
+[RF Diffusion (2022)](https://github.com/RosettaCommons/RFdiffusion) - By Baker lab, University of Washington, a powerful new way to design proteins by combining structure prediction networks and generative diffusion models. The team demonstrated extremely high computational success and tested hundreds of A.I.-generated proteins in the lab, finding that many may be useful as medications, vaccines, or even new nanomaterials. Read more from the [blog of Baker lab](https://www.bakerlab.org/latest/)
